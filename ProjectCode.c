@@ -170,7 +170,7 @@ void uart2_init(void)
 ISR(USART2_RX_vect)																// ISR for receive complete interrupt
 {	/*********************************************************************************
 	We will take four bytes of data at a time ,t,he first is an escape character 0x7E.
-	This is followed by a direction character 8,6,2,4,5 for F,R,L,B,Stop respectively.
+	This is followed by a direction character 8,6,4,2,5 for F,R,L,B,Stop respectively.
 	Final two bytes indicating the PWM input to each motor.
 	*********************************************************************************/
 	incomingByte = UDR2; 
@@ -184,7 +184,7 @@ ISR(USART2_RX_vect)																// ISR for receive complete interrupt
 	{
 		packet_cnt=0;	
 		velocity((int)d[2],(int)d[3]);													  
-		if(d[1] == 0x38)														//ASCII value of 8
+		if(d[1] == 0x38) //ASCII for '8'														//ASCII value of 8
 		{
 			PORTA=0x06;															//forward
 			//Both wheels move forward
@@ -192,7 +192,7 @@ ISR(USART2_RX_vect)																// ISR for receive complete interrupt
 			FBR_Flag=1;
 		}
 
-		if(d[1] == 0x32)														//ASCII value of 2
+		if(d[1] == 0x32) //ASCII for '2'												//ASCII value of 2
 		{
 			PORTA=0x09;															//back
 			//Both wheels move back.
@@ -200,7 +200,7 @@ ISR(USART2_RX_vect)																// ISR for receive complete interrupt
 			FBR_Flag=0;
 		}
 
-		if(d[1] == 0x34)														//ASCII value of 4
+		if(d[1] == 0x34) //ASCII for '4'														//ASCII value of 4
 		{
 			PORTA=0x05;															//left
 			//Right wheel should move with forward and LEft backward for perfect left turn.
@@ -208,7 +208,7 @@ ISR(USART2_RX_vect)																// ISR for receive complete interrupt
 			FBR_Flag=1;
 		}
 
-		if(d[1] == 0x36)														//ASCII value of 6
+		if(d[1] == 0x36) //ASCII for '6'														//ASCII value of 6
 		{
 			PORTA=0x0A;															//right
 			//Left wheel should move with forward and right backward for perfect right turn..
@@ -216,7 +216,7 @@ ISR(USART2_RX_vect)																// ISR for receive complete interrupt
 			FBR_Flag=0;
 		}
 
-		if(d[1] == 0x35)														//ASCII value of 5
+		if(d[1] == 0x35) //ASCII for '5'														//ASCII value of 5
 		{
 			PORTA=0x00;															//stop
 		}
